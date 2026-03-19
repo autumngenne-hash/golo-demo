@@ -329,7 +329,7 @@
   name: "Obscura Cropped Zip Hoodie",
   desc: "Heather gray cropped full-zip hoodie from PacSun",
   price: 64.95,
-  image: "https://www.pacsun.com/on/demandware.static/-/Sites-pacsun-master/default/dw6e3c6a/images/large/0193519270036_367.jpg"
+  image: "Obscura Cropped Zip Hoodie"
 },
             { name: "Baggy Jeans", desc: "Loose fit denim", price: 68, emoji: "👖" },
             { name: "Essential Hoodie", desc: "Fleece pullover hoodie", price: 55, emoji: "🧥" }
@@ -429,7 +429,10 @@
                 <div class="item-desc">${item.desc}</div>
                 <div class="price">${formatMoney(item.price)}</div>
               </div>
-              <button class="add-btn" onclick="addToCart(${index})">Add</button>
+              ${storeKey === "pacsun" && index === 0
+  ? `<button class="add-btn" onclick="window.location.href='product.html'">View</button>`
+  : `<button class="add-btn" onclick="addToCart(${index})">Add</button>`
+}
             </div>
           </div>
         `;
