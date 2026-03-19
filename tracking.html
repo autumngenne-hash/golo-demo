@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GOLO Tracking</title>
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f6f7fb;
+        color: #111827;
+      }
+      .app {
+        max-width: 480px;
+        margin: 0 auto;
+        min-height: 100vh;
+        background: white;
+      }
+      .header {
+        background: linear-gradient(135deg, #111827, #16a34a);
+        color: white;
+        padding: 22px 18px;
+      }
+      .title {
+        font-size: 28px;
+        font-weight: 800;
+        margin: 0 0 8px;
+      }
+      .subtitle {
+        opacity: 0.95;
+        font-size: 14px;
+      }
+      .section {
+        padding: 18px;
+      }
+      .card {
+        border: 1px solid #e5e7eb;
+        border-radius: 18px;
+        padding: 16px;
+        margin-bottom: 14px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+      }
+      .status-pill {
+        display: inline-block;
+        background: #dcfce7;
+        color: #166534;
+        padding: 8px 12px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .timeline {
+        margin-top: 16px;
+      }
+      .step {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 18px;
+        align-items: flex-start;
+      }
+      .dot {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        margin-top: 4px;
+        background: #d1d5db;
+        flex-shrink: 0;
+      }
+      .step.active .dot,
+      .step.done .dot {
+        background: #16a34a;
+      }
+      .step-title {
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+      .muted {
+        color: #6b7280;
+        font-size: 14px;
+      }
+      .btn {
+        width: 100%;
+        background: #16a34a;
+        color: white;
+        border: 0;
+        border-radius: 14px;
+        padding: 14px;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .secondary {
+        margin-top: 10px;
+        background: #f3f4f6;
+        color: #111827;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <div class="header">
+        <h1 class="title">Track Order</h1>
+        <div class="subtitle">Live GOLO delivery updates</div>
+      </div>
+
+      <div class="section">
+        <div class="card">
+          <div class="muted">Store</div>
+          <div style="font-size:22px;font-weight:800;margin:4px 0 10px;" id="storeName">GOLO Store</div>
+          <div class="status-pill" id="statusPill">Order received</div>
+          <div style="margin-top:14px;" class="muted" id="deliveryType">Express</div>
+        </div>
+
+        <div class="card">
+          <div style="font-weight:800;margin-bottom:10px;">Order Summary</div>
+          <div id="itemsList"></div>
+          <div style="border-top:1px solid #eee; margin-top:12px; padding-top:12px;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+              <span>Subtotal</span>
+              <strong id="subtotal">$0.00</strong>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+              <span>Delivery</span>
+              <strong id="deliveryFee">$0.00</strong>
+            </div>
+            <div style="display:flex;justify-content:space-between;">
+              <span>Total</span>
+              <strong id="total">$0.00</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="font-weight:800;margin-bottom:10px;">Delivery Progress</div>
+          <div class="timeline" id="timeline"></div>
+        </div>
+
+        <button class="btn" onclick="window.location.href='index.html'">Shop Again</button>
+        <button class="btn secondary" onclick="advanceStatus()">Advance Demo Status</button>
+      </div>
+    </div>
+
+    <script>
+      const order = JSON.parse(localStorage.getItem("goloOrder") || "{}");
+
+      const statuses = [
+        "Order received",
+        "Store preparing order",
+        "Courier assigned",
+        "Out for delivery",
+        "Delivered"
+      ];
+
+      let currentStatusIndex = Number(localStorage.getItem("goloStatusIndex") || "0");
+
+      function money(v) {
+        return `$${Number(v || 0).toFixed(2)}`;
+      }
+
+      function renderOrder() {
+        document.getElementById("storeName").textContent = order.storeName || "GOLO Store";
+        document.getElementById("deliveryType").textContent =
+          `${order.deliveryType === "express" ? "Express" : "Priority"} • ${order.deliveryLabel || ""}`;
+        document.getElementById("statusPill").textContent = statuses[currentStatusIndex];
+
+        document.getElementById("itemsList").innerHTML = (order.items || []).map(item => `
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+            <span>${item.name}</span>
+            <strong>${money(item.price)}</strong>
+          </div>
+        `).join("");
+
+        document.getElementById("subtotal").textContent = money(order.subtotal);
+        document.getElementById("deliveryFee").textContent = money(order.deliveryFee);
+        document.getElementById("total").textContent = money(order.total);
+
+        document.getElementById("timeline").innerHTML = statuses.map((status, index) => {
+          const cls = index < currentStatusIndex ? "done" : index === currentStatusIndex ? "active" : "";
+          return `
+            <div class="step ${cls}">
+              <div class="dot"></div>
+              <div>
+                <div class="step-title">${status}</div>
+                <div class="muted">
+                  ${index <= currentStatusIndex ? "Updated just now" : "Waiting"}
+                </div>
+              </div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      function advanceStatus() {
+        if (currentStatusIndex < statuses.length - 1) {
+          currentStatusIndex += 1;
+          localStorage.setItem("goloStatusIndex", String(currentStatusIndex));
+          renderOrder();
+        }
+      }
+
+      renderOrder();
+    </script>
+  </body>
+</html>
