@@ -109,14 +109,12 @@
         box-shadow: 0 10px 30px rgba(0,0,0,.08);
       }
       .item-image {
-        height: 140px;
-        padding: 16px;
-        display: flex;
-        align-items: flex-end;
-        color: white;
-        font-size: 28px;
-        font-weight: 900;
-      }
+  height: 160px;
+  border-bottom: 1px solid #eee;
+  overflow: hidden;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+}
       .img-0 { background: linear-gradient(135deg, #111, #444); }
       .img-1 { background: linear-gradient(135deg, #1f2937, #6b7280); }
       .img-2 { background: linear-gradient(135deg, #111827, #16a34a); }
@@ -327,7 +325,12 @@
           theme: "pacsun",
           meta: "Casualwear • 25-40 min • $4.99 delivery",
           items: [
-            { name: "Graphic Tee", desc: "Relaxed fit cotton tee", price: 32, emoji: "👕" },
+            {
+  name: "Obscura Cropped Zip Hoodie",
+  desc: "Heather gray cropped full-zip hoodie from PacSun",
+  price: 64.95,
+  image: "https://www.pacsun.com/on/demandware.static/-/Sites-pacsun-master/default/dw6e3c6a/images/large/0193519270036_367.jpg"
+},
             { name: "Baggy Jeans", desc: "Loose fit denim", price: 68, emoji: "👖" },
             { name: "Essential Hoodie", desc: "Fleece pullover hoodie", price: 55, emoji: "🧥" }
           ]
@@ -414,7 +417,11 @@
         const card = document.createElement("div");
         card.className = "item-card";
         card.innerHTML = `
-          <div class="item-image img-${index}">${item.emoji}</div>
+          <div class="item-image">
+  ${item.image 
+    ? `<img src="${item.image}" style="width:100%;height:100%;object-fit:cover;">`
+    : item.emoji || "🛍️"}
+</div>
           <div class="item-body">
             <div class="item-top">
               <div>
