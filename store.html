@@ -5,118 +5,168 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GOLO Store</title>
     <style>
-      * { box-sizing: border-box; }
+      * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
       body {
         margin: 0;
         font-family: Arial, sans-serif;
-        background: #f6f7fb;
-        color: #111827;
+        background: #0a0a0a;
+        color: #111;
       }
       .app {
         max-width: 480px;
         margin: 0 auto;
         min-height: 100vh;
-        background: #fff;
-        padding-bottom: 100px;
+        background: #f7f7f7;
+        padding-bottom: 110px;
       }
+
       .hero {
         color: white;
-        padding: 22px 18px 26px;
+        padding: 18px 18px 26px;
+        border-bottom-left-radius: 28px;
+        border-bottom-right-radius: 28px;
       }
-      .hero.pacsun { background: linear-gradient(135deg, #1f2937, #4b5563); }
-      .hero.brigade { background: linear-gradient(135deg, #7c2d12, #ea580c); }
-      .hero.nxt { background: linear-gradient(135deg, #1d4ed8, #06b6d4); }
-      .hero.exhibition { background: linear-gradient(135deg, #581c87, #db2777); }
-      .hero.dtlr { background: linear-gradient(135deg, #166534, #22c55e); }
-      .hero.nordstrom { background: linear-gradient(135deg, #111827, #374151); }
+      .hero.pacsun { background: linear-gradient(135deg, #2b2b2b, #5b5b5b); }
+      .hero.brigade { background: linear-gradient(135deg, #30150c, #c85b18); }
+      .hero.nxt { background: linear-gradient(135deg, #0b2f6b, #0ea5e9); }
+      .hero.exhibition { background: linear-gradient(135deg, #3f155e, #d91f72); }
+      .hero.dtlr { background: linear-gradient(135deg, #0d4020, #22c55e); }
+      .hero.nordstrom { background: linear-gradient(135deg, #111, #3c3c3c); }
 
+      .top-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 18px;
+      }
       .back {
-        display: inline-block;
         color: white;
         text-decoration: none;
-        margin-bottom: 14px;
         font-size: 14px;
+        font-weight: 700;
+      }
+      .logo {
+        height: 28px;
       }
       .store-title {
-        font-size: 28px;
-        font-weight: 800;
+        font-size: 30px;
+        font-weight: 900;
         margin: 0 0 8px;
       }
       .store-meta {
         font-size: 14px;
-        opacity: 0.95;
+        opacity: .92;
+        margin-bottom: 14px;
       }
+      .hero-tags {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .hero-tag {
+        background: rgba(255,255,255,.16);
+        border: 1px solid rgba(255,255,255,.12);
+        padding: 8px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
       .section {
         padding: 18px;
       }
-      .section h2 {
+      .section-title {
         margin: 0 0 14px;
         font-size: 20px;
+        font-weight: 800;
       }
       .chips {
         display: flex;
-        gap: 8px;
+        gap: 10px;
         overflow-x: auto;
+        padding-bottom: 4px;
       }
+      .chips::-webkit-scrollbar { display: none; }
       .chip {
-        background: #f3f4f6;
-        border: 1px solid #e5e7eb;
-        padding: 8px 12px;
-        border-radius: 999px;
         white-space: nowrap;
+        background: white;
+        border: 1px solid #ececec;
+        padding: 10px 14px;
+        border-radius: 999px;
         font-size: 13px;
+        color: #222;
+        box-shadow: 0 6px 18px rgba(0,0,0,.04);
       }
+
       .items {
         display: grid;
-        gap: 14px;
+        gap: 16px;
       }
       .item-card {
-        border: 1px solid #e5e7eb;
-        border-radius: 18px;
-        padding: 14px;
-        box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+        background: white;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,.08);
+      }
+      .item-image {
+        height: 140px;
+        padding: 16px;
+        display: flex;
+        align-items: flex-end;
+        color: white;
+        font-size: 28px;
+        font-weight: 900;
+      }
+      .img-0 { background: linear-gradient(135deg, #111, #444); }
+      .img-1 { background: linear-gradient(135deg, #1f2937, #6b7280); }
+      .img-2 { background: linear-gradient(135deg, #111827, #16a34a); }
+
+      .item-body {
+        padding: 16px;
       }
       .item-top {
         display: flex;
         justify-content: space-between;
         gap: 12px;
+        align-items: start;
       }
       .item-name {
-        font-size: 18px;
-        font-weight: 700;
+        font-size: 19px;
+        font-weight: 800;
         margin: 0 0 6px;
       }
       .item-desc {
-        color: #6b7280;
+        color: #666;
         font-size: 14px;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
       }
       .price {
-        font-weight: 700;
+        font-weight: 800;
         font-size: 16px;
       }
-      .btn {
+      .add-btn {
         border: 0;
-        background: #16a34a;
+        background: #111;
         color: white;
-        border-radius: 12px;
-        padding: 10px 14px;
+        border-radius: 14px;
+        padding: 11px 14px;
         font-size: 14px;
-        font-weight: 700;
+        font-weight: 800;
         cursor: pointer;
       }
+
       .cart-bar {
         position: fixed;
         left: 50%;
-        bottom: 14px;
+        bottom: 12px;
         transform: translateX(-50%);
         width: min(448px, calc(100% - 24px));
-        background: #111827;
+        background: rgba(17,17,17,.96);
         color: white;
-        border-radius: 16px;
-        padding: 14px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+        border-radius: 22px;
+        padding: 14px 16px;
         display: none;
+        box-shadow: 0 16px 40px rgba(0,0,0,.28);
       }
       .cart-row {
         display: flex;
@@ -124,40 +174,46 @@
         align-items: center;
         gap: 12px;
       }
+      .cart-meta {
+        font-size: 13px;
+        color: rgba(255,255,255,.72);
+        margin-top: 4px;
+      }
       .cart-btn {
-        background: #16a34a;
-        color: white;
+        background: white;
+        color: #111;
         border: 0;
-        border-radius: 12px;
-        padding: 10px 14px;
-        font-weight: 700;
+        border-radius: 14px;
+        padding: 11px 14px;
+        font-weight: 800;
         cursor: pointer;
       }
+
       .panel {
         position: fixed;
         inset: 0;
-        background: rgba(0,0,0,0.45);
+        background: rgba(0,0,0,.5);
         display: none;
         align-items: flex-end;
         justify-content: center;
       }
       .sheet {
         width: min(480px, 100%);
-        background: white;
-        border-radius: 22px 22px 0 0;
+        background: #fff;
+        border-radius: 26px 26px 0 0;
         padding: 18px;
         max-height: 90vh;
         overflow: auto;
       }
       .sheet h3 {
-        margin-top: 0;
-        font-size: 22px;
+        margin: 0 0 14px;
+        font-size: 24px;
       }
       .cart-item {
         display: flex;
         justify-content: space-between;
         gap: 12px;
-        padding: 12px 0;
+        padding: 14px 0;
         border-bottom: 1px solid #eee;
       }
       .muted {
@@ -167,41 +223,52 @@
       .summary-row {
         display: flex;
         justify-content: space-between;
-        margin: 10px 0;
+        margin: 12px 0;
       }
       .delivery-option {
         border: 1px solid #e5e7eb;
-        border-radius: 14px;
+        border-radius: 18px;
         padding: 14px;
         margin-bottom: 10px;
         cursor: pointer;
       }
       .delivery-option.active {
-        border-color: #16a34a;
-        background: #ecfdf5;
+        border-color: #111;
+        background: #f3f4f6;
       }
-      .checkout-btn {
+      .primary-btn {
         width: 100%;
-        background: #16a34a;
+        background: #111;
         color: white;
         border: 0;
-        border-radius: 14px;
-        padding: 14px;
+        border-radius: 16px;
+        padding: 15px;
         font-size: 16px;
-        font-weight: 700;
+        font-weight: 800;
         margin-top: 14px;
         cursor: pointer;
       }
-      .close-btn {
+      .secondary-btn {
         width: 100%;
         background: #f3f4f6;
         color: #111827;
         border: 0;
-        border-radius: 14px;
-        padding: 12px;
+        border-radius: 16px;
+        padding: 13px;
         font-size: 15px;
-        font-weight: 700;
+        font-weight: 800;
         margin-top: 10px;
+        cursor: pointer;
+      }
+      .remove-btn {
+        margin-top: 8px;
+        border: 0;
+        background: #111;
+        color: white;
+        border-radius: 10px;
+        padding: 7px 10px;
+        font-size: 12px;
+        font-weight: 700;
         cursor: pointer;
       }
     </style>
@@ -209,27 +276,32 @@
   <body>
     <div class="app">
       <div id="hero" class="hero">
-        <a class="back" href="index.html">← Back to stores</a>
-        <div style="display:flex;align-items:center;gap:10px;">
-  <img src="logo.png" style="height:32px;">
-  <h1 class="store-title" id="storeName">Store</h1>
-</div>
+        <div class="top-row">
+          <a class="back" href="index.html">← Back</a>
+          <img src="logo.png" alt="GOLO logo" class="logo" />
+        </div>
+        <h1 class="store-title" id="storeName">Store</h1>
         <div class="store-meta" id="storeMeta">Fast delivery near you</div>
+        <div class="hero-tags">
+          <div class="hero-tag">Premium</div>
+          <div class="hero-tag">Express Available</div>
+          <div class="hero-tag">Tracked Delivery</div>
+        </div>
       </div>
 
       <div class="section">
-        <h2>Categories</h2>
+        <h2 class="section-title">Shop by category</h2>
         <div class="chips">
           <div class="chip">New Arrivals</div>
           <div class="chip">Best Sellers</div>
-          <div class="chip">Sneakers</div>
+          <div class="chip">Footwear</div>
           <div class="chip">Apparel</div>
           <div class="chip">Accessories</div>
         </div>
       </div>
 
       <div class="section">
-        <h2>Popular items</h2>
+        <h2 class="section-title">Featured items</h2>
         <div id="items" class="items"></div>
       </div>
     </div>
@@ -238,7 +310,7 @@
       <div class="cart-row">
         <div>
           <div><strong id="cartCount">0 items</strong></div>
-          <div class="muted" style="color:#d1d5db;">Subtotal: <span id="cartSubtotal">$0.00</span></div>
+          <div class="cart-meta">Subtotal: <span id="cartSubtotal">$0.00</span></div>
         </div>
         <button class="cart-btn" onclick="openCart()">View Cart</button>
       </div>
@@ -255,9 +327,9 @@
           theme: "pacsun",
           meta: "Casualwear • 25-40 min • $4.99 delivery",
           items: [
-            { name: "Graphic Tee", desc: "Relaxed fit cotton tee", price: 32 },
-            { name: "Baggy Jeans", desc: "Loose fit denim", price: 68 },
-            { name: "Essential Hoodie", desc: "Fleece pullover hoodie", price: 55 }
+            { name: "Graphic Tee", desc: "Relaxed fit cotton tee", price: 32, emoji: "👕" },
+            { name: "Baggy Jeans", desc: "Loose fit denim", price: 68, emoji: "👖" },
+            { name: "Essential Hoodie", desc: "Fleece pullover hoodie", price: 55, emoji: "🧥" }
           ]
         },
         brigade: {
@@ -265,9 +337,9 @@
           theme: "brigade",
           meta: "Streetwear • 30-45 min • $5.99 delivery",
           items: [
-            { name: "Cargo Pants", desc: "Utility fit streetwear cargos", price: 74 },
-            { name: "Varsity Jacket", desc: "Heavyweight statement piece", price: 120 },
-            { name: "Oversized Tee", desc: "Drop-shoulder fit", price: 40 }
+            { name: "Cargo Pants", desc: "Utility fit streetwear cargos", price: 74, emoji: "👖" },
+            { name: "Varsity Jacket", desc: "Heavyweight statement piece", price: 120, emoji: "🧥" },
+            { name: "Oversized Tee", desc: "Drop-shoulder fit", price: 40, emoji: "👕" }
           ]
         },
         nxt: {
@@ -275,9 +347,9 @@
           theme: "nxt",
           meta: "Sneakers • 20-35 min • $6.49 delivery",
           items: [
-            { name: "Retro Runner", desc: "Classic sneaker silhouette", price: 110 },
-            { name: "Low Top Essential", desc: "Everyday casual pair", price: 95 },
-            { name: "Performance Trainer", desc: "Cushioned training shoe", price: 130 }
+            { name: "Retro Runner", desc: "Classic sneaker silhouette", price: 110, emoji: "👟" },
+            { name: "Low Top Essential", desc: "Everyday casual pair", price: 95, emoji: "👟" },
+            { name: "Performance Trainer", desc: "Cushioned training shoe", price: 130, emoji: "🥾" }
           ]
         },
         exhibition: {
@@ -285,9 +357,9 @@
           theme: "exhibition",
           meta: "Premium Fashion • 35-50 min • $7.99 delivery",
           items: [
-            { name: "Designer Crewneck", desc: "Premium heavyweight fleece", price: 145 },
-            { name: "Luxury Cap", desc: "Structured premium cap", price: 60 },
-            { name: "Statement Pants", desc: "Tailored fashion fit", price: 165 }
+            { name: "Designer Crewneck", desc: "Premium heavyweight fleece", price: 145, emoji: "🧥" },
+            { name: "Luxury Cap", desc: "Structured premium cap", price: 60, emoji: "🧢" },
+            { name: "Statement Pants", desc: "Tailored fashion fit", price: 165, emoji: "👖" }
           ]
         },
         dtlr: {
@@ -295,9 +367,9 @@
           theme: "dtlr",
           meta: "Footwear • 25-35 min • $5.49 delivery",
           items: [
-            { name: "Lifestyle Sneaker", desc: "Versatile daily pair", price: 98 },
-            { name: "Running Shoe", desc: "Comfort-focused runner", price: 125 },
-            { name: "Slides", desc: "Casual quick-wear slides", price: 35 }
+            { name: "Lifestyle Sneaker", desc: "Versatile daily pair", price: 98, emoji: "👟" },
+            { name: "Running Shoe", desc: "Comfort-focused runner", price: 125, emoji: "👟" },
+            { name: "Slides", desc: "Casual quick-wear slides", price: 35, emoji: "🩴" }
           ]
         },
         nordstrom: {
@@ -305,9 +377,9 @@
           theme: "nordstrom",
           meta: "Department Store • 40-60 min • $8.99 delivery",
           items: [
-            { name: "Leather Wallet", desc: "Classic everyday carry", price: 78 },
-            { name: "Fragrance Set", desc: "Gift-ready fragrance bundle", price: 95 },
-            { name: "Premium Sneakers", desc: "Fashion-forward footwear", price: 150 }
+            { name: "Leather Wallet", desc: "Classic everyday carry", price: 78, emoji: "👛" },
+            { name: "Fragrance Set", desc: "Gift-ready fragrance bundle", price: 95, emoji: "🧴" },
+            { name: "Premium Sneakers", desc: "Fashion-forward footwear", price: 150, emoji: "👟" }
           ]
         }
       };
@@ -342,14 +414,15 @@
         const card = document.createElement("div");
         card.className = "item-card";
         card.innerHTML = `
-          <div class="item-top">
-            <div>
-              <div class="item-name">${item.name}</div>
-              <div class="item-desc">${item.desc}</div>
-              <div class="price">${formatMoney(item.price)}</div>
-            </div>
-            <div>
-              <button class="btn" onclick="addToCart(${index})">Add</button>
+          <div class="item-image img-${index}">${item.emoji}</div>
+          <div class="item-body">
+            <div class="item-top">
+              <div>
+                <div class="item-name">${item.name}</div>
+                <div class="item-desc">${item.desc}</div>
+                <div class="price">${formatMoney(item.price)}</div>
+              </div>
+              <button class="add-btn" onclick="addToCart(${index})">Add</button>
             </div>
           </div>
         `;
@@ -393,15 +466,13 @@
               </div>
               <div>
                 <strong>${formatMoney(item.price)}</strong>
-                <div style="margin-top:8px;">
-                  <button class="btn" style="padding:6px 10px;" onclick="removeItem(${i})">Remove</button>
-                </div>
+                <button class="remove-btn" onclick="removeItem(${i})">Remove</button>
               </div>
             </div>
           `).join("") || `<div class="muted">Your cart is empty.</div>`}
           <div class="summary-row"><span>Subtotal</span><strong>${formatMoney(subtotal)}</strong></div>
-          <button class="checkout-btn" onclick="openCheckout()" ${cart.length ? "" : "disabled"}>Continue to Checkout</button>
-          <button class="close-btn" onclick="closePanel()">Close</button>
+          <button class="primary-btn" onclick="openCheckout()" ${cart.length ? "" : "disabled"}>Continue to Checkout</button>
+          <button class="secondary-btn" onclick="closePanel()">Close</button>
         `;
         document.getElementById("panel").style.display = "flex";
       }
@@ -441,8 +512,8 @@
           <div class="summary-row"><span>Delivery</span><strong id="deliveryFee">${formatMoney(expressFee)}</strong></div>
           <div class="summary-row"><span>Total</span><strong id="totalFee">${formatMoney(subtotal + expressFee)}</strong></div>
 
-          <button class="checkout-btn" onclick="placeOrder()">Place Order</button>
-          <button class="close-btn" onclick="openCart()">Back to Cart</button>
+          <button class="primary-btn" onclick="placeOrder()">Place Order</button>
+          <button class="secondary-btn" onclick="openCart()">Back to Cart</button>
         `;
 
         window.selectedDelivery = "express";
@@ -478,6 +549,7 @@
         };
 
         localStorage.setItem("goloOrder", JSON.stringify(order));
+        localStorage.setItem("goloStatusIndex", "0");
         clearCart();
         window.location.href = "tracking.html";
       }
