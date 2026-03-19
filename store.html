@@ -204,13 +204,6 @@
         margin-top: 10px;
         cursor: pointer;
       }
-      .success {
-        text-align: center;
-        padding: 18px 6px 4px;
-      }
-      .success h2 {
-        margin-bottom: 8px;
-      }
     </style>
   </head>
   <body>
@@ -320,7 +313,21 @@
       const storeKey = params.get("store") || "pacsun";
       const store = stores[storeKey] || stores.pacsun;
 
-      const cart = [];
+      function getCart() {
+        return JSON.parse(localStorage.getItem("goloCart") || "[]");
+      }
+
+      function saveCart(cart) {
+        localStorage.setItem("goloCart", JSON.stringify(cart));
+      }
+
+      function clearCart() {
+        localStorage.removeItem("goloCart");
+      }
+
+      function formatMoney(value) {
+        return `$${value.toFixed(2)}`;
+      }
 
       document.getElementById("storeName").textContent = store.name;
       document.getElementById("storeMeta").textContent = store.meta;
@@ -336,7 +343,7 @@
             <div>
               <div class="item-name">${item.name}</div>
               <div class="item-desc">${item.desc}</div>
-              <div class="price">$${item.price.toFixed(2)}</div>
+              <div class="price">${formatMoney(item.price)}</div>
             </div>
             <div>
               <button class="btn" onclick="addToCart(${index})">Add</button>
@@ -347,41 +354,65 @@
       });
 
       function addToCart(index) {
+        const cart = getCart();
         const item = store.items[index];
-        cart.push(item);
+        cart.push({
+          ...item,
+          storeKey,
+          storeName: store.name
+        });
+        saveCart(cart);
         updateCart();
       }
 
       function updateCart() {
+        const cart = getCart();
         const count = cart.length;
         const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
         document.getElementById("cartCount").textContent = `${count} item${count !== 1 ? "s" : ""}`;
-        document.getElementById("cartSubtotal").textContent = `$${subtotal.toFixed(2)}`;
+        document.getElementById("cartSubtotal").textContent = formatMoney(subtotal);
         document.getElementById("cartBar").style.display = count ? "block" : "none";
       }
 
       function openCart() {
+        const cart = getCart();
         const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
         const sheet = document.getElementById("sheet");
+
         sheet.innerHTML = `
           <h3>Your Cart</h3>
-          ${cart.map(item => `
+          ${cart.map((item, i) => `
             <div class="cart-item">
               <div>
                 <strong>${item.name}</strong>
                 <div class="muted">${item.desc}</div>
+                <div class="muted">${item.storeName}</div>
               </div>
-              <div><strong>$${item.price.toFixed(2)}</strong></div>
+              <div>
+                <strong>${formatMoney(item.price)}</strong>
+                <div style="margin-top:8px;">
+                  <button class="btn" style="padding:6px 10px;" onclick="removeItem(${i})">Remove</button>
+                </div>
+              </div>
             </div>
-          `).join("")}
-          <div class="summary-row"><span>Subtotal</span><strong>$${subtotal.toFixed(2)}</strong></div>
-          <button class="checkout-btn" onclick="openCheckout()">Continue to Checkout</button>
+          `).join("") || `<div class="muted">Your cart is empty.</div>`}
+          <div class="summary-row"><span>Subtotal</span><strong>${formatMoney(subtotal)}</strong></div>
+          <button class="checkout-btn" onclick="openCheckout()" ${cart.length ? "" : "disabled"}>Continue to Checkout</button>
           <button class="close-btn" onclick="closePanel()">Close</button>
         `;
         document.getElementById("panel").style.display = "flex";
       }
 
+      function removeItem(index) {
+        const cart = getCart();
+        cart.splice(index, 1);
+        saveCart(cart);
+        updateCart();
+        openCart();
+      }
+
       function openCheckout() {
+        const cart = getCart();
         const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
         const expressFee = 14.99;
         const priorityFee = 7.99;
@@ -394,22 +425,23 @@
           <div class="delivery-option active" id="expressOption" onclick="selectDelivery('express')">
             <strong>Express</strong>
             <div class="muted">Within 1 hour</div>
-            <div><strong>$${expressFee.toFixed(2)}</strong></div>
+            <div><strong>${formatMoney(expressFee)}</strong></div>
           </div>
 
           <div class="delivery-option" id="priorityOption" onclick="selectDelivery('priority')">
             <strong>Priority</strong>
             <div class="muted">2-3 hours</div>
-            <div><strong>$${priorityFee.toFixed(2)}</strong></div>
+            <div><strong>${formatMoney(priorityFee)}</strong></div>
           </div>
 
-          <div class="summary-row"><span>Items</span><strong>$${subtotal.toFixed(2)}</strong></div>
-          <div class="summary-row"><span>Delivery</span><strong id="deliveryFee">$${expressFee.toFixed(2)}</strong></div>
-          <div class="summary-row"><span>Total</span><strong id="totalFee">$${(subtotal + expressFee).toFixed(2)}</strong></div>
+          <div class="summary-row"><span>Items</span><strong>${formatMoney(subtotal)}</strong></div>
+          <div class="summary-row"><span>Delivery</span><strong id="deliveryFee">${formatMoney(expressFee)}</strong></div>
+          <div class="summary-row"><span>Total</span><strong id="totalFee">${formatMoney(subtotal + expressFee)}</strong></div>
 
           <button class="checkout-btn" onclick="placeOrder()">Place Order</button>
           <button class="close-btn" onclick="openCart()">Back to Cart</button>
         `;
+
         window.selectedDelivery = "express";
         window.subtotalAmount = subtotal;
         window.expressFee = expressFee;
@@ -422,22 +454,29 @@
         document.getElementById("priorityOption").classList.toggle("active", type === "priority");
 
         const fee = type === "express" ? window.expressFee : window.priorityFee;
-        document.getElementById("deliveryFee").textContent = `$${fee.toFixed(2)}`;
-        document.getElementById("totalFee").textContent = `$${(window.subtotalAmount + fee).toFixed(2)}`;
+        document.getElementById("deliveryFee").textContent = formatMoney(fee);
+        document.getElementById("totalFee").textContent = formatMoney(window.subtotalAmount + fee);
       }
 
       function placeOrder() {
-        const deliveryText = window.selectedDelivery === "express" ? "Express delivery within 1 hour" : "Priority delivery in 2-3 hours";
-        const sheet = document.getElementById("sheet");
-        sheet.innerHTML = `
-          <div class="success">
-            <h2>Order Confirmed 🎉</h2>
-            <p>${store.name} order placed successfully.</p>
-            <p class="muted">${deliveryText}</p>
-            <button class="checkout-btn" onclick="window.location.href='index.html'">Back to Home</button>
-            <button class="close-btn" onclick="closePanel()">Close</button>
-          </div>
-        `;
+        const cart = getCart();
+        const deliveryText = window.selectedDelivery === "express" ? "Within 1 hour" : "2-3 hours";
+        const fee = window.selectedDelivery === "express" ? window.expressFee : window.priorityFee;
+        const total = window.subtotalAmount + fee;
+
+        const order = {
+          storeName: cart[0]?.storeName || store.name,
+          items: cart,
+          subtotal: window.subtotalAmount,
+          deliveryType: window.selectedDelivery,
+          deliveryLabel: deliveryText,
+          deliveryFee: fee,
+          total
+        };
+
+        localStorage.setItem("goloOrder", JSON.stringify(order));
+        clearCart();
+        window.location.href = "tracking.html";
       }
 
       function closePanel() {
@@ -447,6 +486,8 @@
       document.getElementById("panel").addEventListener("click", (e) => {
         if (e.target.id === "panel") closePanel();
       });
+
+      updateCart();
     </script>
   </body>
 </html>
