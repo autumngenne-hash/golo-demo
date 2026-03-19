@@ -321,6 +321,18 @@
       }
     </style>
   </head>
+  <script>
+  const user = JSON.parse(localStorage.getItem("goloUser") || "null");
+  if (!user || !user.signedIn) {
+    window.location.href = "login.html";
+  }
+</script>
+  <script>
+  const bubble = document.getElementById("profileBubble");
+  if (bubble && user?.name) {
+    bubble.textContent = user.name.charAt(0).toUpperCase();
+  }
+</script>
   <body>
     <div class="app">
       <div class="hero">
@@ -328,7 +340,7 @@
           <div class="logo-wrap">
             <img src="logo.png" alt="GOLO logo" />
           </div>
-          <div class="profile">🛍️</div>
+          <div class="profile" id="profileBubble">A</div>
         </div>
 
         <h1 class="headline">Luxury delivery,<br />streetwear speed.</h1>
