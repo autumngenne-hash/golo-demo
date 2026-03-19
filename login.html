@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GOLO Login</title>
+    <style>
+      * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #0a0a0a;
+      }
+      .app {
+        max-width: 480px;
+        margin: 0 auto;
+        min-height: 100vh;
+        background: #f7f7f7;
+      }
+      .hero {
+        background: linear-gradient(180deg, rgba(0,0,0,.2), rgba(0,0,0,.65)),
+                    linear-gradient(135deg, #111, #2a2a2a);
+        color: white;
+        padding: 24px 18px 32px;
+        border-bottom-left-radius: 28px;
+        border-bottom-right-radius: 28px;
+      }
+      .logo {
+        height: 34px;
+        margin-bottom: 20px;
+      }
+      h1 {
+        margin: 0 0 10px;
+        font-size: 34px;
+        line-height: 1.05;
+      }
+      .sub {
+        color: rgba(255,255,255,.8);
+        font-size: 14px;
+      }
+      .section {
+        padding: 18px;
+      }
+      .card {
+        background: white;
+        border-radius: 24px;
+        padding: 18px;
+        box-shadow: 0 10px 30px rgba(0,0,0,.08);
+      }
+      .label {
+        font-size: 13px;
+        color: #666;
+        margin-bottom: 8px;
+      }
+      .input {
+        width: 100%;
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        padding: 14px;
+        font-size: 15px;
+        margin-bottom: 14px;
+      }
+      .btn {
+        width: 100%;
+        border: 0;
+        background: #111;
+        color: white;
+        border-radius: 16px;
+        padding: 15px;
+        font-size: 16px;
+        font-weight: 800;
+        cursor: pointer;
+      }
+      .demo {
+        margin-top: 12px;
+        padding: 14px;
+        border-radius: 16px;
+        background: #f3f4f6;
+        color: #374151;
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <div class="hero">
+        <img src="./logo.png" alt="GOLO logo" class="logo" />
+        <h1>Welcome to GOLO</h1>
+        <div class="sub">Sign in to shop premium storefronts and track deliveries live.</div>
+      </div>
+
+      <div class="section">
+        <div class="card">
+          <div class="label">Full name</div>
+          <input id="name" class="input" placeholder="Autumn Genne" />
+
+          <div class="label">Email</div>
+          <input id="email" class="input" placeholder="you@example.com" />
+
+          <div class="label">Password</div>
+          <input id="password" class="input" type="password" placeholder="••••••••" />
+
+          <button class="btn" onclick="login()">Continue</button>
+
+          <div class="demo">
+            Demo login only. Any name/email works.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function login() {
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+
+        if (!name || !email) {
+          alert("Enter your name and email.");
+          return;
+        }
+
+        localStorage.setItem("goloUser", JSON.stringify({
+          name,
+          email,
+          signedIn: true
+        }));
+
+        window.location.href = "index.html";
+      }
+    </script>
+  </body>
+</html>
