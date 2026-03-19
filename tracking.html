@@ -17,9 +17,8 @@
         margin: 0 auto;
         min-height: 100vh;
         background: #f7f7f7;
-        padding-bottom: 28px;
+        padding-bottom: 24px;
       }
-
       .header {
         background: linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.65)),
                     linear-gradient(135deg, #111, #2a2a2a);
@@ -28,40 +27,33 @@
         border-bottom-left-radius: 28px;
         border-bottom-right-radius: 28px;
       }
-
       .topbar {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 18px;
       }
-
       .back {
         color: white;
         text-decoration: none;
         font-size: 14px;
         font-weight: 700;
       }
-
       .logo {
         height: 30px;
       }
-
       .title {
         font-size: 30px;
         font-weight: 900;
         margin: 0 0 8px;
       }
-
       .subtitle {
         color: rgba(255,255,255,.8);
         font-size: 14px;
       }
-
       .section {
         padding: 18px;
       }
-
       .card {
         background: white;
         border-radius: 24px;
@@ -69,19 +61,15 @@
         margin-bottom: 16px;
         box-shadow: 0 10px 30px rgba(0,0,0,.08);
       }
-
-      .label {
-        color: #6b7280;
-        font-size: 13px;
-        margin-bottom: 6px;
-      }
-
       .store-name {
         font-size: 24px;
         font-weight: 900;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
       }
-
+      .muted {
+        color: #6b7280;
+        font-size: 14px;
+      }
       .status-pill {
         display: inline-block;
         background: #111;
@@ -90,124 +78,72 @@
         border-radius: 999px;
         font-size: 12px;
         font-weight: 800;
-      }
-
-      .delivery-line {
-        margin-top: 14px;
-        color: #6b7280;
-        font-size: 14px;
-      }
-
-      .summary-item {
-        display: flex;
-        justify-content: space-between;
-        gap: 12px;
-        margin-bottom: 10px;
-      }
-
-      .summary-total {
-        border-top: 1px solid #eee;
-        margin-top: 12px;
-        padding-top: 12px;
-      }
-
-      .timeline {
         margin-top: 10px;
       }
-
-      .step {
-        display: flex;
-        gap: 12px;
-        align-items: flex-start;
-        margin-bottom: 18px;
+      .map {
         position: relative;
-      }
-
-      .step:last-child {
-        margin-bottom: 0;
-      }
-
-      .step-left {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-width: 18px;
-      }
-
-      .dot {
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-        background: #d1d5db;
-        margin-top: 4px;
-      }
-
-      .line {
-        width: 2px;
-        height: 42px;
-        background: #e5e7eb;
-        margin-top: 6px;
-      }
-
-      .step:last-child .line {
-        display: none;
-      }
-
-      .step.done .dot,
-      .step.active .dot {
-        background: #111;
-      }
-
-      .step.done .line {
-        background: #111;
-      }
-
-      .step-title {
-        font-size: 16px;
-        font-weight: 800;
-        margin-bottom: 4px;
-      }
-
-      .muted {
-        color: #6b7280;
-        font-size: 14px;
-      }
-
-      .courier-box {
-        background: linear-gradient(135deg, #111, #2c2c2c);
-        color: white;
+        height: 240px;
         border-radius: 22px;
-        padding: 16px;
+        overflow: hidden;
+        background:
+          linear-gradient(90deg, transparent 48%, rgba(255,255,255,.7) 48%, rgba(255,255,255,.7) 52%, transparent 52%),
+          linear-gradient(0deg, transparent 48%, rgba(255,255,255,.7) 48%, rgba(255,255,255,.7) 52%, transparent 52%),
+          linear-gradient(135deg, #dbeafe, #e5e7eb);
       }
-
-      .courier-top {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
+      .road {
+        position: absolute;
+        background: rgba(255,255,255,.95);
+        border-radius: 999px;
       }
+      .road.h1 { top: 55px; left: 20px; width: 300px; height: 10px; }
+      .road.h2 { top: 145px; left: 80px; width: 320px; height: 10px; }
+      .road.v1 { top: 20px; left: 85px; width: 10px; height: 180px; }
+      .road.v2 { top: 30px; left: 250px; width: 10px; height: 170px; }
 
-      .courier-name {
-        font-size: 18px;
-        font-weight: 800;
-      }
-
-      .avatar {
-        width: 44px;
-        height: 44px;
+      .pin {
+        position: absolute;
+        width: 34px;
+        height: 34px;
         border-radius: 50%;
-        background: rgba(255,255,255,.1);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 20px;
+        font-size: 16px;
+        box-shadow: 0 8px 20px rgba(0,0,0,.18);
       }
-
-      .eta {
-        color: rgba(255,255,255,.78);
-        font-size: 14px;
+      .store-pin {
+        left: 52px;
+        top: 42px;
+        background: #111;
+        color: white;
       }
-
+      .home-pin {
+        right: 28px;
+        bottom: 32px;
+        background: #16a34a;
+        color: white;
+      }
+      .courier {
+        position: absolute;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: #111;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        left: 60px;
+        top: 50px;
+        box-shadow: 0 12px 24px rgba(0,0,0,.25);
+        transition: all 1.2s ease;
+      }
+      .summary-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
       .btn {
         width: 100%;
         background: #111;
@@ -220,19 +156,9 @@
         cursor: pointer;
         margin-top: 10px;
       }
-
       .btn.secondary {
         background: #ececec;
         color: #111;
-      }
-
-      .empty {
-        text-align: center;
-        padding: 40px 20px 20px;
-      }
-
-      .empty h2 {
-        margin-bottom: 8px;
       }
     </style>
   </head>
@@ -241,7 +167,7 @@
       <div class="header">
         <div class="topbar">
           <a class="back" href="index.html">← Back</a>
-          <img src="logo.png" alt="GOLO logo" class="logo" />
+          <img src="./logo.png" alt="GOLO logo" class="logo" />
         </div>
         <h1 class="title">Track Order</h1>
         <div class="subtitle">Live GOLO delivery updates</div>
@@ -251,6 +177,11 @@
     </div>
 
     <script>
+      const user = JSON.parse(localStorage.getItem("goloUser") || "null");
+      if (!user || !user.signedIn) {
+        window.location.href = "login.html";
+      }
+
       const order = JSON.parse(localStorage.getItem("goloOrder") || "{}");
       const content = document.getElementById("content");
 
@@ -275,104 +206,97 @@
         return currentStatusIndex >= 4 ? "Delivered" : "ETA: 2–3 hours";
       }
 
-      function renderEmpty() {
-        content.innerHTML = `
-          <div class="card empty">
-            <h2>No active order</h2>
-            <p class="muted">Place an order from a storefront to see tracking here.</p>
-            <button class="btn" onclick="window.location.href='index.html'">Go to Homepage</button>
-          </div>
-        `;
+      function courierPosition(index) {
+        const positions = [
+          { left: "60px", top: "50px" },
+          { left: "95px", top: "55px" },
+          { left: "190px", top: "58px" },
+          { left: "265px", top: "150px" },
+          { left: "370px", top: "178px" }
+        ];
+        return positions[index] || positions[0];
       }
 
-      function renderOrder() {
+      function render() {
         if (!order.items || !order.items.length) {
-          renderEmpty();
+          content.innerHTML = `
+            <div class="card">
+              <div class="store-name">No active order</div>
+              <div class="muted">Place an order first to see live tracking.</div>
+              <button class="btn" onclick="window.location.href='index.html'">Go to Homepage</button>
+            </div>
+          `;
           return;
         }
 
         content.innerHTML = `
           <div class="card">
-            <div class="label">Store</div>
             <div class="store-name">${order.storeName || "GOLO Store"}</div>
+            <div class="muted">${user.name} • ${order.deliveryType === "express" ? "Express" : "Priority"} • ${etaText()}</div>
             <div class="status-pill">${statuses[currentStatusIndex]}</div>
-            <div class="delivery-line">
-              ${(order.deliveryType === "express" ? "Express" : "Priority")} • ${order.deliveryLabel || ""}
+          </div>
+
+          <div class="card">
+            <div style="font-size:20px;font-weight:900;margin-bottom:12px;">Live Map</div>
+            <div class="map">
+              <div class="road h1"></div>
+              <div class="road h2"></div>
+              <div class="road v1"></div>
+              <div class="road v2"></div>
+
+              <div class="pin store-pin">🏬</div>
+              <div class="pin home-pin">🏠</div>
+              <div class="courier" id="courier">🛵</div>
             </div>
+            <div class="muted" style="margin-top:12px;">Courier Maya is moving in real time for demo purposes.</div>
           </div>
 
           <div class="card">
             <div style="font-size:20px;font-weight:900;margin-bottom:12px;">Order Summary</div>
-            <div>
-              ${(order.items || []).map(item => `
-                <div class="summary-item">
-                  <span>${item.name}</span>
-                  <strong>${money(item.price)}</strong>
-                </div>
-              `).join("")}
-            </div>
-            <div class="summary-total">
+            ${(order.items || []).map(item => `
               <div class="summary-item">
-                <span>Subtotal</span>
-                <strong>${money(order.subtotal)}</strong>
+                <span>${item.name}</span>
+                <strong>${money(item.price)}</strong>
               </div>
-              <div class="summary-item">
-                <span>Delivery</span>
-                <strong>${money(order.deliveryFee)}</strong>
-              </div>
-              <div class="summary-item" style="margin-bottom:0;">
-                <span>Total</span>
-                <strong>${money(order.total)}</strong>
-              </div>
+            `).join("")}
+            <div class="summary-item" style="margin-top:12px;">
+              <span>Subtotal</span>
+              <strong>${money(order.subtotal)}</strong>
             </div>
-          </div>
-
-          <div class="courier-box" style="margin-bottom:16px;">
-            <div class="courier-top">
-              <div>
-                <div class="courier-name">Courier: Maya</div>
-                <div class="eta">${etaText()}</div>
-              </div>
-              <div class="avatar">🛵</div>
+            <div class="summary-item">
+              <span>Delivery</span>
+              <strong>${money(order.deliveryFee)}</strong>
             </div>
-            <div class="eta">Your GOLO courier is handling this delivery in real time.</div>
-          </div>
-
-          <div class="card">
-            <div style="font-size:20px;font-weight:900;margin-bottom:12px;">Delivery Progress</div>
-            <div class="timeline">
-              ${statuses.map((status, index) => {
-                const cls = index < currentStatusIndex ? "done" : index === currentStatusIndex ? "active" : "";
-                return `
-                  <div class="step ${cls}">
-                    <div class="step-left">
-                      <div class="dot"></div>
-                      <div class="line"></div>
-                    </div>
-                    <div>
-                      <div class="step-title">${status}</div>
-                      <div class="muted">${index <= currentStatusIndex ? "Updated just now" : "Waiting for update"}</div>
-                    </div>
-                  </div>
-                `;
-              }).join("")}
+            <div class="summary-item">
+              <span>Total</span>
+              <strong>${money(order.total)}</strong>
             </div>
           </div>
 
           <button class="btn" onclick="advanceStatus()">Advance Demo Status</button>
-          <button class="btn secondary" onclick="window.location.href='index.html'">Shop Again</button>
+          <button class="btn secondary" onclick="logout()">Log Out</button>
         `;
+
+        const courier = document.getElementById("courier");
+        const pos = courierPosition(currentStatusIndex);
+        courier.style.left = pos.left;
+        courier.style.top = pos.top;
       }
 
       function advanceStatus() {
         if (currentStatusIndex < statuses.length - 1) {
           currentStatusIndex += 1;
           localStorage.setItem("goloStatusIndex", String(currentStatusIndex));
-          renderOrder();
+          render();
         }
       }
 
-      renderOrder();
+      function logout() {
+        localStorage.removeItem("goloUser");
+        window.location.href = "login.html";
+      }
+
+      render();
     </script>
   </body>
 </html>
