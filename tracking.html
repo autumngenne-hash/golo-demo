@@ -5,148 +5,254 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GOLO Tracking</title>
     <style>
-      * { box-sizing: border-box; }
+      * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
       body {
         margin: 0;
         font-family: Arial, sans-serif;
-        background: #f6f7fb;
-        color: #111827;
+        background: #0a0a0a;
+        color: #111;
       }
       .app {
         max-width: 480px;
         margin: 0 auto;
         min-height: 100vh;
-        background: white;
+        background: #f7f7f7;
+        padding-bottom: 28px;
       }
+
       .header {
-        background: linear-gradient(135deg, #111827, #16a34a);
+        background: linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.65)),
+                    linear-gradient(135deg, #111, #2a2a2a);
         color: white;
-        padding: 22px 18px;
+        padding: 18px 18px 28px;
+        border-bottom-left-radius: 28px;
+        border-bottom-right-radius: 28px;
       }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 18px;
+      }
+
+      .back {
+        color: white;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .logo {
+        height: 30px;
+      }
+
       .title {
-        font-size: 28px;
-        font-weight: 800;
+        font-size: 30px;
+        font-weight: 900;
         margin: 0 0 8px;
       }
+
       .subtitle {
-        opacity: 0.95;
+        color: rgba(255,255,255,.8);
         font-size: 14px;
       }
+
       .section {
         padding: 18px;
       }
+
       .card {
-        border: 1px solid #e5e7eb;
-        border-radius: 18px;
+        background: white;
+        border-radius: 24px;
         padding: 16px;
-        margin-bottom: 14px;
-        box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+        margin-bottom: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,.08);
       }
+
+      .label {
+        color: #6b7280;
+        font-size: 13px;
+        margin-bottom: 6px;
+      }
+
+      .store-name {
+        font-size: 24px;
+        font-weight: 900;
+        margin-bottom: 10px;
+      }
+
       .status-pill {
         display: inline-block;
-        background: #dcfce7;
-        color: #166534;
-        padding: 8px 12px;
+        background: #111;
+        color: white;
+        padding: 9px 12px;
         border-radius: 999px;
-        font-size: 13px;
-        font-weight: 700;
+        font-size: 12px;
+        font-weight: 800;
       }
+
+      .delivery-line {
+        margin-top: 14px;
+        color: #6b7280;
+        font-size: 14px;
+      }
+
+      .summary-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 10px;
+      }
+
+      .summary-total {
+        border-top: 1px solid #eee;
+        margin-top: 12px;
+        padding-top: 12px;
+      }
+
       .timeline {
-        margin-top: 16px;
+        margin-top: 10px;
       }
+
       .step {
         display: flex;
         gap: 12px;
-        margin-bottom: 18px;
         align-items: flex-start;
+        margin-bottom: 18px;
+        position: relative;
       }
+
+      .step:last-child {
+        margin-bottom: 0;
+      }
+
+      .step-left {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 18px;
+      }
+
       .dot {
         width: 14px;
         height: 14px;
         border-radius: 50%;
-        margin-top: 4px;
         background: #d1d5db;
-        flex-shrink: 0;
+        margin-top: 4px;
       }
-      .step.active .dot,
-      .step.done .dot {
-        background: #16a34a;
+
+      .line {
+        width: 2px;
+        height: 42px;
+        background: #e5e7eb;
+        margin-top: 6px;
       }
+
+      .step:last-child .line {
+        display: none;
+      }
+
+      .step.done .dot,
+      .step.active .dot {
+        background: #111;
+      }
+
+      .step.done .line {
+        background: #111;
+      }
+
       .step-title {
-        font-weight: 700;
+        font-size: 16px;
+        font-weight: 800;
         margin-bottom: 4px;
       }
+
       .muted {
         color: #6b7280;
         font-size: 14px;
       }
+
+      .courier-box {
+        background: linear-gradient(135deg, #111, #2c2c2c);
+        color: white;
+        border-radius: 22px;
+        padding: 16px;
+      }
+
+      .courier-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .courier-name {
+        font-size: 18px;
+        font-weight: 800;
+      }
+
+      .avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(255,255,255,.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+      }
+
+      .eta {
+        color: rgba(255,255,255,.78);
+        font-size: 14px;
+      }
+
       .btn {
         width: 100%;
-        background: #16a34a;
+        background: #111;
         color: white;
         border: 0;
-        border-radius: 14px;
-        padding: 14px;
+        border-radius: 16px;
+        padding: 15px;
         font-size: 16px;
-        font-weight: 700;
+        font-weight: 800;
         cursor: pointer;
-      }
-      .secondary {
         margin-top: 10px;
-        background: #f3f4f6;
-        color: #111827;
+      }
+
+      .btn.secondary {
+        background: #ececec;
+        color: #111;
+      }
+
+      .empty {
+        text-align: center;
+        padding: 40px 20px 20px;
+      }
+
+      .empty h2 {
+        margin-bottom: 8px;
       }
     </style>
   </head>
   <body>
     <div class="app">
       <div class="header">
-        <div style="display:flex;align-items:center;gap:10px;">
-  <img src="logo.png" style="height:36px;">
-  <h1 class="title">Track Order</h1>
-</div>
+        <div class="topbar">
+          <a class="back" href="index.html">← Back</a>
+          <img src="logo.png" alt="GOLO logo" class="logo" />
+        </div>
+        <h1 class="title">Track Order</h1>
         <div class="subtitle">Live GOLO delivery updates</div>
       </div>
 
-      <div class="section">
-        <div class="card">
-          <div class="muted">Store</div>
-          <div style="font-size:22px;font-weight:800;margin:4px 0 10px;" id="storeName">GOLO Store</div>
-          <div class="status-pill" id="statusPill">Order received</div>
-          <div style="margin-top:14px;" class="muted" id="deliveryType">Express</div>
-        </div>
-
-        <div class="card">
-          <div style="font-weight:800;margin-bottom:10px;">Order Summary</div>
-          <div id="itemsList"></div>
-          <div style="border-top:1px solid #eee; margin-top:12px; padding-top:12px;">
-            <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
-              <span>Subtotal</span>
-              <strong id="subtotal">$0.00</strong>
-            </div>
-            <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
-              <span>Delivery</span>
-              <strong id="deliveryFee">$0.00</strong>
-            </div>
-            <div style="display:flex;justify-content:space-between;">
-              <span>Total</span>
-              <strong id="total">$0.00</strong>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div style="font-weight:800;margin-bottom:10px;">Delivery Progress</div>
-          <div class="timeline" id="timeline"></div>
-        </div>
-
-        <button class="btn" onclick="window.location.href='index.html'">Shop Again</button>
-        <button class="btn secondary" onclick="advanceStatus()">Advance Demo Status</button>
-      </div>
+      <div class="section" id="content"></div>
     </div>
 
     <script>
       const order = JSON.parse(localStorage.getItem("goloOrder") || "{}");
+      const content = document.getElementById("content");
 
       const statuses = [
         "Order received",
@@ -162,37 +268,100 @@
         return `$${Number(v || 0).toFixed(2)}`;
       }
 
-      function renderOrder() {
-        document.getElementById("storeName").textContent = order.storeName || "GOLO Store";
-        document.getElementById("deliveryType").textContent =
-          `${order.deliveryType === "express" ? "Express" : "Priority"} • ${order.deliveryLabel || ""}`;
-        document.getElementById("statusPill").textContent = statuses[currentStatusIndex];
+      function etaText() {
+        if ((order.deliveryType || "").toLowerCase() === "express") {
+          return currentStatusIndex >= 4 ? "Delivered" : "ETA: under 1 hour";
+        }
+        return currentStatusIndex >= 4 ? "Delivered" : "ETA: 2–3 hours";
+      }
 
-        document.getElementById("itemsList").innerHTML = (order.items || []).map(item => `
-          <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
-            <span>${item.name}</span>
-            <strong>${money(item.price)}</strong>
+      function renderEmpty() {
+        content.innerHTML = `
+          <div class="card empty">
+            <h2>No active order</h2>
+            <p class="muted">Place an order from a storefront to see tracking here.</p>
+            <button class="btn" onclick="window.location.href='index.html'">Go to Homepage</button>
           </div>
-        `).join("");
+        `;
+      }
 
-        document.getElementById("subtotal").textContent = money(order.subtotal);
-        document.getElementById("deliveryFee").textContent = money(order.deliveryFee);
-        document.getElementById("total").textContent = money(order.total);
+      function renderOrder() {
+        if (!order.items || !order.items.length) {
+          renderEmpty();
+          return;
+        }
 
-        document.getElementById("timeline").innerHTML = statuses.map((status, index) => {
-          const cls = index < currentStatusIndex ? "done" : index === currentStatusIndex ? "active" : "";
-          return `
-            <div class="step ${cls}">
-              <div class="dot"></div>
-              <div>
-                <div class="step-title">${status}</div>
-                <div class="muted">
-                  ${index <= currentStatusIndex ? "Updated just now" : "Waiting"}
+        content.innerHTML = `
+          <div class="card">
+            <div class="label">Store</div>
+            <div class="store-name">${order.storeName || "GOLO Store"}</div>
+            <div class="status-pill">${statuses[currentStatusIndex]}</div>
+            <div class="delivery-line">
+              ${(order.deliveryType === "express" ? "Express" : "Priority")} • ${order.deliveryLabel || ""}
+            </div>
+          </div>
+
+          <div class="card">
+            <div style="font-size:20px;font-weight:900;margin-bottom:12px;">Order Summary</div>
+            <div>
+              ${(order.items || []).map(item => `
+                <div class="summary-item">
+                  <span>${item.name}</span>
+                  <strong>${money(item.price)}</strong>
                 </div>
+              `).join("")}
+            </div>
+            <div class="summary-total">
+              <div class="summary-item">
+                <span>Subtotal</span>
+                <strong>${money(order.subtotal)}</strong>
+              </div>
+              <div class="summary-item">
+                <span>Delivery</span>
+                <strong>${money(order.deliveryFee)}</strong>
+              </div>
+              <div class="summary-item" style="margin-bottom:0;">
+                <span>Total</span>
+                <strong>${money(order.total)}</strong>
               </div>
             </div>
-          `;
-        }).join("");
+          </div>
+
+          <div class="courier-box" style="margin-bottom:16px;">
+            <div class="courier-top">
+              <div>
+                <div class="courier-name">Courier: Maya</div>
+                <div class="eta">${etaText()}</div>
+              </div>
+              <div class="avatar">🛵</div>
+            </div>
+            <div class="eta">Your GOLO courier is handling this delivery in real time.</div>
+          </div>
+
+          <div class="card">
+            <div style="font-size:20px;font-weight:900;margin-bottom:12px;">Delivery Progress</div>
+            <div class="timeline">
+              ${statuses.map((status, index) => {
+                const cls = index < currentStatusIndex ? "done" : index === currentStatusIndex ? "active" : "";
+                return `
+                  <div class="step ${cls}">
+                    <div class="step-left">
+                      <div class="dot"></div>
+                      <div class="line"></div>
+                    </div>
+                    <div>
+                      <div class="step-title">${status}</div>
+                      <div class="muted">${index <= currentStatusIndex ? "Updated just now" : "Waiting for update"}</div>
+                    </div>
+                  </div>
+                `;
+              }).join("")}
+            </div>
+          </div>
+
+          <button class="btn" onclick="advanceStatus()">Advance Demo Status</button>
+          <button class="btn secondary" onclick="window.location.href='index.html'">Shop Again</button>
+        `;
       }
 
       function advanceStatus() {
